@@ -5,6 +5,9 @@ node("MVN") {
 	stage('maven'){
 	sh label: '', script: 'mvn package'
 	}
+	stage('tree'){
+	sh label: '', script: 'sudo apt-get install tree'
+	}
 }
 
 
