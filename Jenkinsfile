@@ -1,4 +1,4 @@
-node("MVN") {
+node("ANSIBLE") {
 		stage('git') {
     git branch: 'Dev', credentialsId: 'mvn', url: 'https://github.com/LAKSHMIJODI/game-of-life'
 	}
