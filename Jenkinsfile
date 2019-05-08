@@ -8,6 +8,9 @@ node("ANSIBLE") {
 	stage('tree'){
 	sh label: '', script: 'sudo apt-get install tree'
 	}
+	stage('artifacts'){
+	archive '/target*.jar'
+	}
 }
 
 
