@@ -1,25 +1,17 @@
-node {
-    stage('SCM') {
-        git 'https://github.com/asquarezone/game-of-life.git'
-    }
-    
-    stage('Build & Package') {
-        withSonarQubeEnv('sonar') {
-            sh 'mvn clean package sonar:sonar'
-        }
-    }
-    
-    stage("Quality Gate") {
-        timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-          }
-    }
-    
-    stage('Results'){
-        archive 'gameoflife-web/target/gameoflife.war'
-        junit 'gameoflife-web/target/surefire-reports/*.xml'
-    }
+node("ANSIBLE") {
+		stage('git') {
+    git branch: 'Dev', credentialsId: 'mvn', url: 'https://github.com/LAKSHMIJODI/game-of-life'
+	}
+	stage('maven'){
+	sh label: '', script: 'mvn package'
+	}
+	stage('tree'){
+	sh label: '', script: 'sudo apt-get install tree'
+	}
+	stage('artifacts'){
+	archive '/target*.jar'
+	}
 }
+
+
+
